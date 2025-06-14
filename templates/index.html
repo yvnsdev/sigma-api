@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Triage - Urgencias Hospitalarias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header moderno -->
+        <header class="header-gradient p-4 mb-4 shadow-sm">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-0"><i class="bi bi-heart-pulse me-2"></i>Sistema de Triage Chileno</h1>
+                    <p class="mb-0 text-white-80">Clasificación de pacientes en urgencias hospitalarias</p>
+                </div>
+                <div class="status-indicator">
+                    <span class="badge bg-light text-dark"><i class="bi bi-server me-1"></i>Online</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="row">
+            <!-- Formulario de ingreso mejorado -->
+            <div class="col-lg-4">
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white rounded-top">
+                        <h5 class="mb-0"><i class="bi bi-person-plus me-2"></i>Ingreso de Paciente</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="pacienteForm">
+                            <div class="mb-3">
+                                <label for="edad" class="form-label">Edad <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                    <input type="number" class="form-control" id="edad" required min="0" max="120">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="sexo" class="form-label">Sexo <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
+                                    <select class="form-select" id="sexo" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="presion_sistolica" class="form-label">Presión Sistólica <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-speedometer2"></i></span>
+                                        <input type="number" class="form-control" id="presion_sistolica" required min="50" max="250">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label for="presion_diastolica" class="form-label">Presión Diastólica <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-speedometer2"></i></span>
+                                        <input type="number" class="form-control" id="presion_diastolica" required min="30" max="150">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="frecuencia_cardiaca" class="form-label">Frecuencia Cardíaca (lpm) <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-heart"></i></span>
+                                    <input type="number" class="form-control" id="frecuencia_cardiaca" required min="30" max="200">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="temperatura" class="form-label">Temperatura (°C) <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-thermometer"></i></span>
+                                    <input type="number" step="0.1" class="form-control" id="temperatura" required min="30" max="45">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="saturacion_o2" class="form-label">Saturación O₂ (%) <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-droplet"></i></span>
+                                    <input type="number" step="0.1" class="form-control" id="saturacion_o2" required min="50" max="100">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="nivel_conciencia" class="form-label">Nivel de Conciencia <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-activity"></i></span>
+                                    <select class="form-select" id="nivel_conciencia" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="A">Alerta (A)</option>
+                                        <option value="V">Respuesta a voz (V)</option>
+                                        <option value="P">Respuesta a dolor (P)</option>
+                                        <option value="U">Inconsciente (U)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="tiempo_evolucion_horas" class="form-label">Tiempo de Evolución (horas)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                                    <input type="number" class="form-control" id="tiempo_evolucion_horas" min="0" max="720" value="0">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <h6 class="mb-3"><i class="bi bi-clipboard2-pulse me-2"></i>Síntomas y Antecedentes</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="dolor_toracico">
+                                            <label class="form-check-label" for="dolor_toracico">Dolor torácico</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="disnea">
+                                            <label class="form-check-label" for="disnea">Disnea</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="fiebre">
+                                            <label class="form-check-label" for="fiebre">Fiebre</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="trauma_reciente">
+                                            <label class="form-check-label" for="trauma_reciente">Trauma reciente</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="sangrado_activo">
+                                            <label class="form-check-label" for="sangrado_activo">Sangrado activo</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="antecedentes_cronicos">
+                                            <label class="form-check-label" for="antecedentes_cronicos">Antecedentes crónicos</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 py-2">
+                                <i class="bi bi-clipboard2-check me-2"></i>Evaluar Triage
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Resultado mejorado -->
+                <div class="card mb-4 border-0 shadow-sm d-none" id="resultadoCard">
+                    <div class="card-header bg-primary text-white rounded-top">
+                        <h5 class="mb-0"><i class="bi bi-clipboard2-data me-2"></i>Resultado de Triage</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="triageResult"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tabla de ranking y gráficos mejorados -->
+            <div class="col-lg-8">
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white rounded-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0"><i class="bi bi-list-ol me-2"></i>Ranking de Pacientes</h5>
+                            <div>
+                                <button id="refreshBtn" class="btn btn-sm btn-light me-2">
+                                    <i class="bi bi-arrow-clockwise"></i> Actualizar
+                                </button>
+                                <button id="exportCSV" class="btn btn-sm btn-light">
+                                    <i class="bi bi-download"></i> Exportar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <div class="chart-container">
+                                    <canvas id="triageChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <canvas id="mortalityChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>ID</th>
+                                        <th>Triage</th>
+                                        <th class="text-center">Edad</th>
+                                        <th>Sexo</th>
+                                        <th>Riesgo</th>
+                                        <th>Estado</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rankingTable">
+                                    <!-- Datos se cargarán con JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
